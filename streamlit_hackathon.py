@@ -42,7 +42,7 @@ with header:
 with col1:
 	st.write("")
 with col2:
-	st.image('./hit_parade.jpeg') #/Users/Paul/Desktop/Hackathon_1
+	st.image('/Users/Paul/Desktop/Hackathon_1/hit_parade.jpeg') #/Users/Paul/Desktop/Hackathon_1
 with col3:
 	st.write("")
 
@@ -67,10 +67,12 @@ with header1:
 
 		if randrange(0,10) == 0:
 			st.markdown("<h1 style='text-align: center; color: green;'>Félicitations ! 🎉r</h1>", unsafe_allow_html=True)
-			st.write("Cette musique a toutes les caractéristiques pour être populaire !")
+			st.markdown("<h3 style='text-align: center; '>Cette musique a toutes les caractéristiques pour être populaire !</h3>", unsafe_allow_html=True)
+			#st.write("Cette musique a toutes les caractéristiques pour être populaire !")
 		else:
 			st.markdown("<h1 style='text-align: center; color: red;'>Sorry... 😢</h1>", unsafe_allow_html=True)
-			st.write("Cette musique n'atteint pas les attentes du marché actuel pour être qualifié de populaire.")
+			st.markdown("<h3 style='text-align: center; '>Cette musique n'atteint pas les attentes du marché actuel pour être qualifié de populaire</h3>", unsafe_allow_html=True)
+			#st.write("Cette musique n'atteint pas les attentes du marché actuel pour être qualifié de populaire.")
 		
 	else:
 
@@ -92,6 +94,5 @@ with header1:
 
 					st.write(a)
 				except ValueError:
-					st.warning("Désolé cette musique n'est pas référencée ...")
-	
+					st.warning("Désolé cette musique n'est pas référencée...")
 
