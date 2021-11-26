@@ -4,27 +4,8 @@ import streamlit as st
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from itertools import cycle
-from threading import Thread
 from time import sleep
-from sys import stdout
-
-def spectrum():
-    done = False
-
-    def animate():
-        a = 'Analyse du spectre musicale'
-
-        for c in cycle([f'{a}.', f'{a}..', f'{a}...', f'{a}.', f'{a}..', f'{a}...', f'{a}.', f'{a} terminée']):
-            if done:
-                break
-            stdout.write('\r' + c)
-            stdout.flush()
-            sleep(0.25)
-
-    Thread(target=animate).start()
-    sleep(2)
-    done = True
+from random import randrange
 
 @st.cache
 def df_music():
@@ -61,14 +42,36 @@ with header:
 with col1:
 	st.write("")
 with col2:
-	st.image('./hit_parade.jpeg') #/Users/Paul/Desktop/Hackathon_1
+	st.image('/Users/Paul/Desktop/Hackathon_1/hit_parade.jpeg') #/Users/Paul/Desktop/Hackathon_1
 with col3:
 	st.write("")
 
 with header1:
 	douille1 = st.file_uploader("Upload your MIDI or MP3 file", type=["MIDI", "MP3"])
 	if douille1:
-		st.write(spectrum())
+		with st.spinner('Analyse du spectre musical'):
+			my_bar = st.progress(0)
+			for percent_complete in range(100):
+				sleep(0.075)
+				my_bar.progress(percent_complete + 1)
+			st.success('Analyse terminée avec succès !')
+
+		sleep(1)
+		
+		with st.spinner('Calcul du degré de popularité'):
+			my_bar = st.progress(0)
+			for percent_complete in range(100):
+				sleep(0.04)
+				my_bar.progress(percent_complete + 1)
+			st.success('Calcul terminé !')
+
+		if randrange(0,10) == 0:
+			st.markdown("<h1 style='text-align: center; color: green;'>Félicitations ! 🎉r</h1>", unsafe_allow_html=True)
+			st.write("Cette musique a toutes les caractéristiques pour être populaire !")
+		else:
+			st.markdown("<h1 style='text-align: center; color: red;'>Sorry... 😢</h1>", unsafe_allow_html=True)
+			st.write("Cette musique n'atteint pas les attentes du marché actuel pour être qualifié de populaire.")
+		
 	else:
 
 		with header2:
@@ -90,9 +93,5 @@ with header1:
 					st.write(a)
 				except ValueError:
 					st.warning("Désolé cette musique n'est pas référencée ...")
-					
-
-#with dataset : 
-	#@st.cache
 	
 
