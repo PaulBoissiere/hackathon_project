@@ -50,7 +50,7 @@ with header1:
 
 with header2:
 	music_input = st.text_input('Select a music to get his popularity :')
-	if music_input == None:
+	if not music_input:
 		st.write("")
 	else:
 		try:
