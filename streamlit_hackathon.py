@@ -41,7 +41,7 @@ with header:
 with col1:
 	st.write("")
 with col2:
-	st.image('/Users/Paul/Desktop/Hackathon_1/hit_parade.jpeg')
+	st.image('./hit_parade.jpeg') #/Users/Paul/Desktop/Hackathon_1
 with col3:
 	st.write("")
 
