@@ -49,7 +49,7 @@ with header1:
 	st.file_uploader("Upload your MIDI or MP3 file", type=["MIDI", "MP3"])
 
 with header2:
-	music_input = st.text_input('Select a music to get his popularity :')
+	music_input = st.text_input('Select a music to get its popularity:')
 	if not music_input:
 		st.write("")
 	else:
