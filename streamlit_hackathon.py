@@ -50,21 +50,23 @@ with header1:
 
 with header2:
 	music_input = st.text_input('Select a music to get his popularity :')
+	if music_input == None:
+		st.write("")
+	else:
+		try:
+			X.insert(0, "track_name", df_music()["track_name"])
+			X.insert(1, "artist_name", df_music()["artist_name"])
+			music_selection = X[X['track_name'].str.contains(music_input, case=False)]
 
-	try:
-		X.insert(0, "track_name", df_music()["track_name"])
-		X.insert(1, "artist_name", df_music()["artist_name"])
-		music_selection = X[X['track_name'].str.contains(music_input, case=False)]
-
-		df_pred = logreg_model.predict(music_selection.select_dtypes(exclude=['object']))
+			df_pred = logreg_model.predict(music_selection.select_dtypes(exclude=['object']))
 
 
-		a = music_selection[['artist_name', 'track_name']]
-		a.insert(0, 'is_popular', df_pred)
+			a = music_selection[['artist_name', 'track_name']]
+			a.insert(0, 'is_popular', df_pred)
 
-		st.write(a)
-	except ValueError:
-		st.warning("Désolé cette musique n'est pas référencée ...")
+			st.write(a)
+		except ValueError:
+			st.warning("Désolé cette musique n'est pas référencée ...")
 
 #with dataset : 
 	#@st.cache
