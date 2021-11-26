@@ -4,7 +4,27 @@ import streamlit as st
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from itertools import cycle
+from threading import Thread
+from time import sleep
+from sys import stdout
 
+def spectrum():
+    done = False
+
+    def animate():
+        a = 'Analyse du spectre musicale'
+
+        for c in cycle([f'{a}.', f'{a}..', f'{a}...', f'{a}.', f'{a}..', f'{a}...', f'{a}.', f'{a} terminée']):
+            if done:
+                break
+            stdout.write('\r' + c)
+            stdout.flush()
+            sleep(0.25)
+
+    Thread(target=animate).start()
+    sleep(2)
+    done = True
 
 @st.cache
 def df_music():
@@ -46,27 +66,31 @@ with col3:
 	st.write("")
 
 with header1:
-	st.file_uploader("Upload your MIDI or MP3 file", type=["MIDI", "MP3"])
-
-with header2:
-	music_input = st.text_input('Select a music to get its popularity:')
-	if not music_input:
-		st.write("")
+	douille1 = st.file_uploader("Upload your MIDI or MP3 file", type=["MIDI", "MP3"])
+	if douille1:
+		st.write(spectrum())
 	else:
-		try:
-			X.insert(0, "track_name", df_music()["track_name"])
-			X.insert(1, "artist_name", df_music()["artist_name"])
-			music_selection = X[X['track_name'].str.contains(music_input, case=False)]
 
-			df_pred = logreg_model.predict(music_selection.select_dtypes(exclude=['object']))
+		with header2:
+			music_input = st.text_input('Select a music to get its popularity:')
+			if not music_input:
+				st.write("")
+			else:
+				try:
+					X.insert(0, "track_name", df_music()["track_name"])
+					X.insert(1, "artist_name", df_music()["artist_name"])
+					music_selection = X[X['track_name'].str.contains(music_input, case=False)]
+
+					df_pred = logreg_model.predict(music_selection.select_dtypes(exclude=['object']))
 
 
-			a = music_selection[['artist_name', 'track_name']]
-			a.insert(0, 'is_popular', df_pred)
+					a = music_selection[['artist_name', 'track_name']]
+					a.insert(0, 'is_popular', df_pred)
 
-			st.write(a)
-		except ValueError:
-			st.warning("Désolé cette musique n'est pas référencée ...")
+					st.write(a)
+				except ValueError:
+					st.warning("Désolé cette musique n'est pas référencée ...")
+					
 
 #with dataset : 
 	#@st.cache
