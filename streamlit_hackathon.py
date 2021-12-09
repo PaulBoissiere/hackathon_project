@@ -47,8 +47,8 @@ with col3:
 	st.write("")
 
 with header1:
-	douille1 = st.file_uploader("Upload your MIDI or MP3 file", type=["MIDI", "MP3"])
-	if douille1:
+	uploader = st.file_uploader("Upload your MIDI or MP3 file", type=["MIDI", "MP3"])
+	if uploader:
 		with st.spinner('Analyse du spectre musical'):
 			my_bar = st.progress(0)
 			for percent_complete in range(100):
